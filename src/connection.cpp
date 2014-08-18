@@ -7,9 +7,11 @@
 
 using namespace redis3m;
 
-connection::connection(const std::string& host, const unsigned port)
+connection::connection(const std::string& host, const unsigned port, const std::string& password)
 {
     c = redisConnect(host.c_str(), port);
+    if (!password.empty())
+        redisCommand(c, "AUTH %s", password.c_str());
     if (c->err != REDIS_OK)
     {
         throw unable_to_connect();

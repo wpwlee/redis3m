@@ -31,9 +31,10 @@ public:
      * @return
      */
     inline static ptr_t create(const std::string& host="localhost",
-                               const unsigned int port=6379)
+                               const unsigned int port=6379,
+                               const std::string& password="")
     {
-        return ptr_t(new connection(host, port));
+        return ptr_t(new connection(host, port, password));
     }
 
     ~connection();
@@ -87,7 +88,7 @@ public:
 
 private:
     friend class connection_pool;
-    connection(const std::string& host, const unsigned int port);
+    connection(const std::string& host, const unsigned int port, const std::string& password);
 
     role_t _role;
     redisContext *c;
